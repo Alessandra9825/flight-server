@@ -7,8 +7,8 @@ import functools
 
 mysql = MySQL()
 app = Flask(__name__)
-app.config['MYSQL_DATABASE_USER'] = 'riley'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'riley'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'AlU1998?'
 app.config['MYSQL_DATABASE_DB'] = 'flight'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config.update(SECRET_KEY='dev')
