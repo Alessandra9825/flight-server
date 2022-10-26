@@ -13,7 +13,7 @@ from types import SimpleNamespace
 
 def get_secret():
 
-    secret_name = "Masteraccoundb"
+    secret_name = "Masterdb0011"
     region_name = "us-east-1"
 
     # Create a Secrets Manager client
