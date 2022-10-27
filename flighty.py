@@ -11,7 +11,7 @@ from botocore.exceptions import ClientError
 
 def get_secret():
     secret = ""
-    secret_name = "Masterdb0013"
+    secret_name = "Masterdb0014"
     region_name = "us-east-1"
 
     # Create a Secrets Manager client
