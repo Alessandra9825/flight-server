@@ -12,8 +12,7 @@ from types import SimpleNamespace
 
 
 def get_secret():
-
-    secret_name = "Masterdb0011"
+    secret_name = "Masterdb0012"
     region_name = "us-east-1"
 
     # Create a Secrets Manager client
@@ -48,13 +47,12 @@ def get_secret():
             # We can't find the resource that you asked for.
             # Deal with the exception here, and/or rethrow at your discretion.
             raise e
-    else:
-        if 'SecretString' in get_secret_value_response:
-            secret = get_secret_value_response['SecretString']
         else:
-            decoded_binary_secret = base64.b64decode(
-                get_secret_value_response['SecretBinary'])
-
+            if 'SecretString' in get_secret_value_response:
+                secret = get_secret_value_response['SecretString']
+            else:
+                decoded_binary_secret = base64.b64decode(
+                    get_secret_value_response['SecretBinary'])
     return secret
 
 
