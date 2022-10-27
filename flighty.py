@@ -11,7 +11,7 @@ from botocore.exceptions import ClientError
 
 def get_secret():
     secret = ""
-    secret_name = "Masterdb0014"
+    secret_name = "Masterdb0015"
     region_name = "us-east-1"
 
     # Create a Secrets Manager client
@@ -57,7 +57,8 @@ def get_secret():
 
 secretText = ((get_secret().replace("\r\n", "")).replace("  ", "")).strip()
 password = (secretText.split(',')[1]).split(':')[1].strip().replace('"', "")
-host = (secretText.split(',')[2]).split(':')[1].replace("}", "").strip()
+host = ((secretText.split(',')[2]).split(':')[
+        1].replace("}", "").strip()).replace('"', "")
 
 mysql = MySQL()
 app = Flask(__name__)
