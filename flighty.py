@@ -7,11 +7,6 @@ import functools
 import boto3
 import base64
 from botocore.exceptions import ClientError
-import json
-from types import SimpleNamespace
-
-from collections import namedtuple
-from json import JSONEncoder
 
 
 def get_secret():
