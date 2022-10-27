@@ -10,8 +10,12 @@ from botocore.exceptions import ClientError
 import json
 from types import SimpleNamespace
 
+from collections import namedtuple
+from json import JSONEncoder
+
 
 def get_secret():
+    secret = ""
     secret_name = "Masterdb0012"
     region_name = "us-east-1"
 
@@ -47,23 +51,25 @@ def get_secret():
             # We can't find the resource that you asked for.
             # Deal with the exception here, and/or rethrow at your discretion.
             raise e
+    else:
+        if 'SecretString' in get_secret_value_response:
+            secret = get_secret_value_response['SecretString']
         else:
-            if 'SecretString' in get_secret_value_response:
-                secret = get_secret_value_response['SecretString']
-            else:
-                decoded_binary_secret = base64.b64decode(
-                    get_secret_value_response['SecretBinary'])
-    return secret
+            decoded_binary_secret = base64.b64decode(
+                get_secret_value_response['SecretBinary'])
+        return secret
 
 
-dados = json.loads(get_secret(), object_hook=lambda d: SimpleNamespace(**d))
+secretText = ((get_secret().replace("\r\n", "")).replace("  ", "")).strip()
+password = (secretText.split(',')[1]).split(':')[1].strip().replace('"', "")
+host = (secretText.split(',')[2]).split(':')[1].replace("}", "").strip()
 
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = dados.password
+app.config['MYSQL_DATABASE_PASSWORD'] = password
 app.config['MYSQL_DATABASE_DB'] = 'flight'
-app.config['MYSQL_DATABASE_HOST'] = dados.host
+app.config['MYSQL_DATABASE_HOST'] = host
 app.config.update(SECRET_KEY='dev')
 mysql.init_app(app)
 conn = mysql.connect()
