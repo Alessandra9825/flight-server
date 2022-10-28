@@ -11,7 +11,7 @@ from botocore.exceptions import ClientError
 
 def get_secret():
     secret = ""
-    secret_name = "db0017"
+    secret_name = "db0018"
     region_name = "us-east-1"
 
     # Create a Secrets Manager client
@@ -62,7 +62,7 @@ host = ((secretText.split(',')[2]).split(':')[
 
 mysql = MySQL()
 app = Flask(__name__)
-app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_USER'] = 'userdb'
 app.config['MYSQL_DATABASE_PASSWORD'] = password
 app.config['MYSQL_DATABASE_DB'] = 'flight'
 app.config['MYSQL_DATABASE_HOST'] = host
